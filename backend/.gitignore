@@ -1,0 +1,42 @@
+# === Python ===
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+*.sqlite3
+
+# === Flask ===
+instance/
+*.db
+*.log
+
+# === NLTK Data (optional if downloaded locally) ===
+nltk_data/
+
+# === React ===
+node_modules/
+dist/
+build/
+
+# === Environment Variables ===
+.env
+.env.*    # any other env variant
+
+# === VSCode and IDE Settings ===
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# === OS-specific ===
+.DS_Store
+Thumbs.db
+
+# === Others ===
+*.bak
+*.swp
+*.tmp

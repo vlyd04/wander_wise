@@ -1,0 +1,94 @@
+{
+  "destinations": [
+  {
+    "title": "Jaipur, Rajasthan",
+    "image_url": "/static/images/jaipur.jpg",
+    "description": "Known as the Pink City, famous for palaces and forts."
+  },
+  {
+    "title": "Leh-Ladakh, Jammu & Kashmir",
+    "image_url": "/static/images/leh.avif",
+    "description": "A high-desert city in the Himalayas, known for monasteries and adventure."
+  },
+  {
+    "title": "Agra, Uttar Pradesh",
+    "image_url": "/static/images/agra.jpeg",
+    "description": "Home to the iconic Taj Mahal and Mughal architecture."
+  },
+  {
+    "title": "Ooty, TamilNadu",
+    "image_url": "/static/images/ooty.jpeg",
+    "description": "A chain of misty hills spread across a lush green carpet - with plenty to see, enjoy and experience. Ooty is much more than a visitor's paradise."
+  },
+  {
+    "title": "Udaipur, Rajasthan",
+    "image_url": "/static/images/udaipur.jpeg",
+    "description": "Known as the City of Lakes, with beautiful palaces and temples."
+  },
+  {
+    "title": "Mysore, Karnataka",
+    "image_url": "/static/images/mysore.jpg",
+    "description": "Famous for Mysore Palace, yoga, and Dussehra festival."
+  },
+  
+  {
+    "title": "Darjeeling, West Bengal",
+    "image_url": "/static/images/darjeeling.jpeg",
+    "description": "A hill station known for tea gardens and the Himalayan railway."
+  },
+  {
+    "title": "Andaman and Nicobar Islands",
+    "image_url": "/static/images/andaman.jpeg",
+    "description": "Tropical islands with crystal-clear beaches and water sports."
+  },
+  {
+    "title": "Kodaikanal, Tamil Nadu",
+    "image_url": "/static/images/kodaikanal.jpeg",
+    "description": "A charming hill station with lakes, waterfalls, and pine forests."
+  }
+],
+"experiences": [
+  {
+    "title": "Camel Safari in Jaisalmer",
+    "image_url": "/static/images/jaisalmer.jpg",
+    "description": "Ride into the golden dunes of the Thar Desert."
+  },
+  {
+    "title": "Houseboat Stay in Alleppey",
+    "image_url": "/static/images/kerala.avif",
+    "description": "Explore Kerala's backwaters on a luxury boat."
+  },
+  {
+    "title": "Trekking in Manali",
+    "image_url": "/static/images/manali_trek.jpeg",
+    "description": "Enjoy adventurous treks through the Himalayan valleys."
+  },
+  {
+    "title": "Paragliding in Bir Billing",
+    "image_url": "/static/images/bir.jpeg",
+    "description": "Soar high over the mountains in India's paragliding capital."
+  },
+  
+  {
+    "title": "Tea Tasting in Munnar",
+    "image_url": "/static/images/munnar.jpeg",
+    "description": "Tour lush tea gardens and sample aromatic teas."
+  },
+  {
+    "title": "Scuba Diving in Havelock Island",
+    "image_url": "/static/images/scuba.jpeg",
+    "description": "Discover coral reefs and marine life underwater."
+  },
+  {
+    "title": "Skiing in Gulmarg",
+    "image_url": "/static/images/gulmarg.webp",
+    "description": "Hit the snowy slopes of Kashmir's top ski destination."
+  },
+  {
+    "title": "Desert Camping in Pushkar",
+    "image_url": "/static/images/pushkar.jpeg",
+    "description": "Stay under the stars in a luxury desert camp."
+  }
+]
+
+}
