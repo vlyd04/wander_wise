@@ -1,87 +1,85 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+
+import React, { useEffect, useState, useRef } from 'react';
+import { fetchDestinations, fetchExperiences } from '../../api';
 import Card from './Card';
 
-const CardSection = ({ heading, endpoint }) => {
-  const [data, setData] = useState([]);
+const DEFAULT_CITY = 'Delhi'; // You can make this dynamic or prop-based
 
-  useEffect(() => {
-    axios.get(`http://localhost:5000/api/${endpoint}`)
-      .then(res => setData(res.data))
-      .catch(err => console.error(err));
-  }, [endpoint]);
+
+const CardSection = ({ heading, endpoint, initialData = [], searchQuery = '', filterPlace = '', filterInterest = '', selectedTags = [] }) => {
+  const [data, setData] = useState(initialData);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  // Fetch from API only if searching or filtering
+
+
+// Only set initialData on first mount
+const isFirstRender = useRef(true);
+useEffect(() => {
+  if (isFirstRender.current) {
+    setData(initialData);
+    isFirstRender.current = false;
+  }
+  // eslint-disable-next-line
+}, []);
+
+// Fetch from API if searching or filtering
+useEffect(() => {
+  if (!searchQuery && !filterPlace && !filterInterest) return;
+  setLoading(true);
+  setError("");
+  const fetchData = async () => {
+    try {
+      let result = [];
+      if (endpoint === 'destinations') {
+        result = await fetchDestinations({ city: filterPlace || searchQuery || DEFAULT_CITY });
+      } else if (endpoint === 'experiences') {
+        result = await fetchExperiences({ city: filterPlace || searchQuery || DEFAULT_CITY });
+      }
+      // Optionally filter by interest if needed
+      if (filterInterest) {
+        result = result.filter(item =>
+          (item.kinds || '').toLowerCase().includes(filterInterest.toLowerCase())
+        );
+      }
+      setData(result);
+    } catch (err) {
+      setError('Failed to fetch data');
+    }
+    setLoading(false);
+  };
+  fetchData();
+}, [endpoint, searchQuery, filterPlace, filterInterest]);
+
+  // Filter data by selected tags (all tags must be present in item.tags)
+  const filteredData = Array.isArray(data) && selectedTags.length > 0
+    ? data.filter(item =>
+        Array.isArray(item.tags) && selectedTags.every(tag => item.tags.includes(tag))
+      )
+    : data;
 
   return (
-    <section className="p-6">
+    <section className="px-2 py-6 sm:px-4 md:px-8 max-w-7xl mx-auto">
       <h2 className="text-2xl font-bold mb-4">{heading}</h2>
-      <div className="flex flex-wrap gap-6">
-        {data.map((item) => (
-          <Card key={item.id} title={item.title} image={`http://localhost:5000${item.image_url}`} description={item.description} />
-        ))}
+      {loading && <div>Loading...</div>}
+      {error && <div className="text-red-500">{error}</div>}
+      <div className="flex flex-wrap justify-center gap-6">
+        {Array.isArray(filteredData) && filteredData.length > 0 ? (
+          filteredData.map((item, idx) => (
+            <Card
+              key={idx}
+              title={item.name}
+              image={item.image}
+              description={item.description}
+            />
+          ))
+        ) : !loading && (
+          <div className="text-gray-500">No data found.</div>
+        )}
       </div>
     </section>
   );
 };
 
 export default CardSection;
-
-// import React, { useEffect, useState } from 'react';
-// import axios from 'axios';
-// import Card from './Card';
-
-// const CardSection = () => {
-//   const [activities, setActivities] = useState([]);
-//   const [loading, setLoading] = useState(true);
-
-//   const latitude = 41.397158;
-//   const longitude = 2.160873;
-//   const radius = 1;
-
-//   useEffect(() => {
-//     axios
-//       .get('http://localhost:5000/api/activities', {
-//         params: { latitude, longitude, radius }
-//       })
-//       .then((res) => {
-//         const raw = res.data.data || [];
-//         const mapped = raw.map((item) => ({
-//           id: item.id,
-//           title: item.attributes.name,
-//           image: item.attributes.picture?.[0] || '',
-//           description: item.attributes.shortDescription,
-//           link: item.attributes.bookingLink
-//         }));
-//         setActivities(mapped);
-//       })
-//       .catch((err) => {
-//         console.error('Error fetching Amadeus activities:', err);
-//         setActivities([]);
-//       })
-//       .finally(() => setLoading(false));
-//   }, []);
-
-//   return (
-//     <section className="p-6">
-//       <h2 className="text-2xl font-bold mb-4">Amadeus Activities Nearby</h2>
-//       {loading ? (
-//         <p>Loading activities...</p>
-//       ) : activities.length === 0 ? (
-//         <p>No activities found.</p>
-//       ) : (
-//         <div className="flex flex-wrap gap-6">
-//           {activities.map(({ id, title, image, description, link }) => (
-//             <AmadeusCard
-//               key={id}
-//               title={title}
-//               image={image}
-//               description={description}
-//               link={link}
-//             />
-//           ))}
-//         </div>
-//       )}
-//     </section>
-//   );
-// };
-
-// export default CardSection;

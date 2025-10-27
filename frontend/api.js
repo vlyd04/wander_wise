@@ -5,22 +5,23 @@ export async function fetchStates() {
     return res.json();
 }
 
-export async function fetchExperiences() {
-    const res = await fetch(`${BASE_URL}/experiences`);
+
+// Fetch destinations using OpenTripMap API via backend
+export async function fetchDestinations({ city, lon, lat, radius }) {
+    let url = `${BASE_URL}/api/destinations?`;
+    if (city) url += `city=${encodeURIComponent(city)}`;
+    if (lon && lat) url += `&lon=${lon}&lat=${lat}`;
+    if (radius) url += `&radius=${radius}`;
+    const res = await fetch(url);
     return res.json();
 }
 
-export async function fetchDestinationsByState(state) {
-    const res = await fetch(`${BASE_URL}/destinations/state/${state}`);
-    return res.json();
-}
-
-export async function fetchStateDetails(state) {
-    const res = await fetch(`${BASE_URL}/state/${state}`);
-    return res.json();
-}
-
-export async function fetchExperienceDetails(exp) {
-    const res = await fetch(`${BASE_URL}/experience/${exp}`);
+// Fetch experiences using OpenTripMap API via backend
+export async function fetchExperiences({ city, lon, lat, radius }) {
+    let url = `${BASE_URL}/api/experiences?`;
+    if (city) url += `city=${encodeURIComponent(city)}`;
+    if (lon && lat) url += `&lon=${lon}&lat=${lat}`;
+    if (radius) url += `&radius=${radius}`;
+    const res = await fetch(url);
     return res.json();
 }

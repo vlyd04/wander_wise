@@ -3,89 +3,6 @@
 # # import mysql.connector
 # # from flask import send_from_directory
 
-# # app = Flask(__name__,static_folder='static')
-# # CORS(app)
-
-# # conn = mysql.connector.connect(
-# #     host="localhost",
-# #     user="newuser",
-# #     password="newpassword",
-# #     database="tourismdb"
-# # )
-# # cursor = conn.cursor(dictionary=True)
-
-# # @app.route("/api/destinations")
-# # def get_destinations():
-# #     cursor.execute("SELECT * FROM destinations")
-# #     results = cursor.fetchall()
-# #     return jsonify(results)
-
-# # @app.route("/api/experiences")
-# # def get_experiences():
-# #     cursor.execute("SELECT * FROM experiences")
-# #     results = cursor.fetchall()
-# #     return jsonify(results)
-
-# # @app.route('/images/<filename>')
-# # def serve_image(filename):
-# #     return send_from_directory('static/images', filename)
-
-# # if __name__ == "__main__":
-# #     app.run(debug=True)
-
-
-# # # from flask import Flask, request, jsonify
-# # # from flask_cors import CORS
-# # # import requests
-
-# # # app = Flask(__name__)
-# # # CORS(app, resources={r"/*": {"origins": "*"}})
-
-# # # # Replace with your actual Amadeus API credentials
-# # # AMADEUS_CLIENT_ID = "fGgf1VfcrMIkMp8d5IlXfw3BjjvkVUJJ"
-# # # AMADEUS_CLIENT_SECRET = "kOMCjFGH7ewnD8p6"
-
-# # # def get_amadeus_token():
-# # #     url = 'https://test.api.amadeus.com/v1/security/oauth2/token'
-# # #     headers = {
-# # #         'Content-Type': 'application/x-www-form-urlencoded'
-# # #     }
-# # #     data = {
-# # #         'grant_type': 'client_credentials',
-# # #         'client_id':AMADEUS_CLIENT_ID ,
-# # #         'client_secret':AMADEUS_CLIENT_SECRET 
-# # #     }
-
-# # #     response = requests.post(url, headers=headers, data=data)
-# # #     if response.status_code == 200:
-# # #         return response.json().get('access_token')
-    
-# # #     else:
-# # #         return None
-
-# # # @app.route("/api/activities", methods=["GET"])
-# # # def fetch_amadeus_activities():
-# # #     latitude = request.args.get('latitude')
-# # #     longitude = request.args.get('longitude')
-# # #     radius = request.args.get('radius', 1)
-
-# # #     token = get_amadeus_token()
-# # #     if not token:
-# # #         return jsonify({"error": "Unable to get access token"}), 500
-
-# # #     url = "https://test.api.amadeus.com/v1/shopping/activities?latitude=441.9028&longitude=12.4964&radius=1"
-# # #     headers = {
-# # #         "Authorization": f"Bearer {token}",
-# # #         "Accept": "application/json"
-# # #     }
-
-# # #     response = requests.get(url, headers=headers)
-# # #     print("Response from Amadeus:", response.status_code, response.text)
-# # #     return jsonify(response.json()), response.status_code
-
-# # # if __name__ == "__main__":
-# # #     app.run(debug=True)
-
 
 from flask import Flask, jsonify, send_from_directory, request
 from flask_cors import CORS
@@ -95,59 +12,11 @@ import requests
 app = Flask(__name__, static_folder='static')
 CORS(app, resources={r"/*": {"origins": "*"}})  # ✅ Apply CORS to all routes
 
-# Database config
-DB_CONFIG = {
-    'host': "localhost",
-    'user': "newuser",
-    'password': "newpassword",
-    'database': "tourismdb"
-}
 
-def get_connection():
-    return mysql.connector.connect(**DB_CONFIG)
+from app import create_app
 
-@app.route("/api/destinations")
-def get_destinations():
-    conn = get_connection()
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM destinations")
-    results = cursor.fetchall()
-    cursor.close()
-    conn.close()
-    return jsonify(results)
+app = create_app()
 
-@app.route("/api/experiences")
-def get_experiences():
-    conn = get_connection()
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM experiences")
-    results = cursor.fetchall()
-    cursor.close()
-    conn.close()
-    return jsonify(results)
-
-
-
-
-def get_wikipedia_summary(query):
-    title = query.strip().title().replace(" ", "_")
-    url = f"https://en.wikipedia.org/api/rest_v1/page/summary/{title}"
-    response = requests.get(url)
-    if response.status_code == 200:
-        data = response.json()
-        return data.get("extract", "Sorry, no summary found.")
-    else:
-        return "Sorry, I couldn't find information about that place."
-
-@app.route("/chat", methods=["POST"])
-def chat():
-    user_input = request.json.get("message", "")
-    reply = get_wikipedia_summary(user_input)
-    return jsonify({"reply": reply})
-
-@app.route('/images/<filename>')
-def serve_image(filename):
-    return send_from_directory('static/images', filename)
 
 if __name__ == "__main__":
     app.run(debug=True)
