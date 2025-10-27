@@ -12,9 +12,9 @@ def create_app():
     CORS(app, 
      resources={
          r"/*": {
-             "origins": "http://localhost:5173",
+             "origins": ["http://localhost:5173", "https://wander-wise-frontend.vercel.app"],
              "allow_headers": ["Content-Type"],
-             "methods": ["POST", "OPTIONS"]
+             "methods": ["GET", "POST", "OPTIONS"]
          }
      },
      supports_credentials=True

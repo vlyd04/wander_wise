@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:5000";
+const BASE_URL = "https://travel-backend-kvsp.onrender.com";
 
 export async function fetchStates() {
     const res = await fetch(`${BASE_URL}/states`);
