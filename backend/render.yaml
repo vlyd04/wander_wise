@@ -3,8 +3,20 @@ services:
     name: wander-wise-backend
     env: python
     region: oregon
-    buildCommand: pip install --upgrade pip && cd backend && pip install -r requirements.txt
-    startCommand: cd backend && gunicorn --chdir . wsgi:app
+    plan: free
+    buildCommand: |
+      pip install --upgrade pip
+      pip install -r backend/requirements.txt
+    startCommand: cd backend && gunicorn wsgi:app --log-level debug
+    autoDeploy: true
+    healthCheckPath: /
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: FLASK_APP
+        value: wsgi:app
+      - key: PYTHON_VERSION
+        value: 3.9.12
     envVars:
       - key: PYTHON_VERSION
         value: 3.9.12
