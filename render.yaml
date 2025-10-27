@@ -3,7 +3,14 @@ services:
     name: wander-wise-backend
     env: python
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn wsgi:app
+    startCommand: gunicorn 'app:create_app()'
+    buildFilter:
+      paths:
+      - backend/**
+      - requirements.txt
+      - app.py
+    options:
+      python_version: "3.9.12"
     envVars:
       - key: AMADEUS_CLIENT_ID
         value: QuW8JPfhmusHqJ5RKx1HS58M9wORpb0G
