@@ -2,15 +2,19 @@ services:
   - type: web
     name: wander-wise-backend
     env: python
+    region: singapore  # Choose the region closest to your users
+    plan: free
+    healthCheckPath: /
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn 'app:create_app()'
-    buildFilter:
-      paths:
-      - backend/**
-      - requirements.txt
-      - app.py
-    options:
-      python_version: "3.9.12"
+    startCommand: gunicorn backend.wsgi:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.12
+      - key: FLASK_ENV
+        value: production
+      - key: FLASK_APP
+        value: backend.wsgi:app
+    autoDeploy: true
     envVars:
       - key: AMADEUS_CLIENT_ID
         value: QuW8JPfhmusHqJ5RKx1HS58M9wORpb0G
