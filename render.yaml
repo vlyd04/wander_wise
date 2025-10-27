@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: wander-wise-backend
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn wsgi:app
+    envVars:
+      - key: AMADEUS_CLIENT_ID
+        value: QuW8JPfhmusHqJ5RKx1HS58M9wORpb0G
+      - key: AMADEUS_CLIENT_SECRET
+        value: H3PhNDASolbgLFpV
+      - key: OPENTRIPMAP_API_KEY
+        value: 5ae2e3f221c38a28845f05b6e7c2251358c940672c1354c11888f5ab
+    buildFilter:
+      paths:
+      - backend/**
+      - requirements.txt
+      - wsgi.py
