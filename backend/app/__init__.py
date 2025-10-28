@@ -22,7 +22,6 @@ def create_app():
              "allow_headers": ["Content-Type"],
              "expose_headers": ["Content-Type"],
              "supports_credentials": True
-             "methods": ["GET", "POST", "OPTIONS"]
          }
      },
      supports_credentials=True
