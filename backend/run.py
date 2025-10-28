@@ -1,7 +1,9 @@
 import os
 from app import create_app
+from flask_cors import CORS
 
 app = create_app()
+CORS(app)  # Enable CORS for all routes
 
 if __name__ == "__main__":
     # Use environment variables with defaults for flexibility
