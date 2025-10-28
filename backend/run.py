@@ -1,33 +1,19 @@
-# # from flask import Flask, jsonify
-# # from flask_cors import CORS
-# # import mysql.connector
-# # from flask import send_from_directory
-
-
-from flask import Flask, jsonify, send_from_directory, request
-from flask_cors import CORS
-import mysql.connector
-import requests
-
-app = Flask(__name__, static_folder='static')
-CORS(app, resources={r"/*": {"origins": "*"}})  # ✅ Apply CORS to all routes
-
-
+import os
 from app import create_app
 
 app = create_app()
 
-
 if __name__ == "__main__":
-    app.run(debug=True)
-
-
-# from flask import Flask, jsonify, send_from_directory, request
-# from flask_cors import CORS
-# import mysql.connector
-# import openai
-# import json
-# import os
+    # Use environment variables with defaults for flexibility
+    port = int(os.environ.get("PORT", 5000))
+    host = os.environ.get("HOST", "0.0.0.0")  # Allow external connections
+    debug = os.environ.get("FLASK_DEBUG", "False").lower() == "true"
+    
+    app.run(
+        host=host,
+        port=port,
+        debug=debug
+    )
 
 
 # # === App Setup ===

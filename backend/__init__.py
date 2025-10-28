@@ -1,1 +1,3 @@
-# This file marks the directory as a Python package
+from app import create_app
+
+app = create_app()
