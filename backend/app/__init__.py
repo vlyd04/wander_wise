@@ -15,9 +15,13 @@ def create_app():
              "origins": [
                  "http://localhost:5173",
                  "http://127.0.0.1:5173",
-                 "https://wander-wise-frontend.vercel.app"
+                 "https://wander-wise-frontend.vercel.app",
+                 "https://wander-wise-6vmj.vercel.app"
              ],
+             "methods": ["GET", "POST", "OPTIONS"],
              "allow_headers": ["Content-Type"],
+             "expose_headers": ["Content-Type"],
+             "supports_credentials": True
              "methods": ["GET", "POST", "OPTIONS"]
          }
      },
